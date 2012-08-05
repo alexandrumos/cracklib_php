@@ -15,27 +15,27 @@
             $parts = explode(':', $result);
             $cracklib_msg = trim($parts[1]);
             
-            if (eregi('it does not contain enough DIFFERENT characters', $cracklib_msg))
+            if (preg_match('/it does not contain enough DIFFERENT characters/i', $cracklib_msg))
             {
                 return array('good_password' => 0, 'status_code' => 10, 'cracklib_msg' => $cracklib_msg);
             }
-            elseif (eregi('it is WAY too short', $cracklib_msg))
+            elseif (preg_match('/it is WAY too short/i', $cracklib_msg))
             {
                 return array('good_password' => 0, 'status_code' => 11, 'cracklib_msg' => $cracklib_msg);
             }
-            elseif (eregi('it is too short', $cracklib_msg))
+            elseif (preg_match('/it is too short/i', $cracklib_msg))
             {
                 return array('good_password' => 0, 'status_code' => 12, 'cracklib_msg' => $cracklib_msg);
             }
-            elseif (eregi('it is too simplistic/systematic', $cracklib_msg))
+            elseif (preg_match('/it is too simplistic\/systematic/i', $cracklib_msg))
             {
                 return array('good_password' => 0, 'status_code' => 13, 'cracklib_msg' => $cracklib_msg);
             }
-            elseif (eregi('it is based on a dictionary word', $cracklib_msg))
+            elseif (preg_match('/it is based on a dictionary word/i', $cracklib_msg))
             {
                 return array('good_password' => 0, 'status_code' => 14, 'cracklib_msg' => $cracklib_msg);
             }
-            elseif (eregi('ok', $cracklib_msg))
+            elseif (preg_match('/ok/i', $cracklib_msg))
             {
                 return array('good_password' => 1, 'status_code' => 1, 'cracklib_msg' => $cracklib_msg);
             }
