@@ -18,6 +18,18 @@ How to use it:
 ?>
 ```
 
+This example will output:
+```
+array(3) {
+  ["good_password"]=>
+  int(1)
+  ["status_code"]=>
+  int(1)
+  ["cracklib_msg"]=>
+  string(2) "OK"
+}
+```
+
 The cracklib_check function always returns an asociative array containing:
 * good_password (int): 1 if the password is safe enough and can be used, 0 otherwise;
 * status_code (int): 1 if the password can be used, 10 to 15 to signal various statuses (explained under);
