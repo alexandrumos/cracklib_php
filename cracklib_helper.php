@@ -17,18 +17,36 @@
     *
     * @access  public
     * @param   string
-    * @param   string
-    * @param   integer
-    * @param   string
-    * @return  string
+    * @return  array
     */
 
     function cracklib_check($password)
     {
-    
-        $command = 'echo '.escapeshellcmd($password).' | /usr/sbin/cracklib-check';
+        $result  = null;
+        $command = '/usr/sbin/cracklib-check';
 
-        $result = shell_exec($command);
+        $desc_spec = array(
+            0 => array('pipe', 'r'),
+            1 => array('pipe', 'w')
+        );
+
+        $process = proc_open($command, $desc_spec, $pipes);
+        
+        if (is_resource($process)) {
+
+            fwrite($pipes[0], $password);
+            fclose($pipes[0]);
+
+            $result = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+
+            $return_val = proc_close($process);
+
+            if ($return_val === -1)
+            {
+                trigger_error('Error executing cracklib-check');
+            }
+        }
         
         if ($result === null)
         {
